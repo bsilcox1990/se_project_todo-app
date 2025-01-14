@@ -1,6 +1,6 @@
 # Simple Todo App
 
-This app allows a user to keep track of a todo list with deadlines. It allows the user to add new items to the list, check them off when they are completed, and delete them.
+This app allows a user to keep track of a todo list with deadlines.
 
 ## Functionality
 
