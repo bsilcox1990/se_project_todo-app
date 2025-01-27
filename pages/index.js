@@ -7,6 +7,7 @@ import {
 } from "../utils/constants.js";
 import Todo from "../components/Todo.js";
 import FormValidator from "../components/FormValidator.js";
+import Section from "../components/section.js";
 
 const addTodoButton = document.querySelector(".button_action_add");
 const addTodoPopup = document.querySelector("#add-todo-popup");
@@ -57,9 +58,17 @@ addTodoPopup.addEventListener("click", (evt) => {
   }
 });
 
+const renderTodos = new Section({
+  items: initialTodos,
+  renderer: (item) => {
+    renderTodo(item, "append");
+  },
+  containerSelector: ".todos__list",
+});
+
 const renderTodo = (item, method) => {
   const todo = generateTodo(item);
-  todosList[method](todo);
+  renderTodos.addItem(todo, method);
 };
 
 addTodoForm.addEventListener("submit", (evt) => {
@@ -73,11 +82,16 @@ addTodoForm.addEventListener("submit", (evt) => {
 
   const id = uuidv4();
   const values = { name, date, id };
+
   renderTodo(values, "append");
   newTodoValidator.resetValidation();
   closeModal(addTodoPopup);
 });
 
+renderTodos.renderItems();
+
+/*
 initialTodos.forEach((item) => {
   renderTodo(item, "append");
 });
+*/
