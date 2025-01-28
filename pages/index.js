@@ -9,6 +9,7 @@ import Todo from "../components/Todo.js";
 import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
 import PopupWithForm from "../components/PopupWithForm.js";
+import TodoCounter from "../components/TodoCounter.js";
 
 const addTodoButton = document.querySelector(".button_action_add");
 //const addTodoPopupEl = document.querySelector("#add-todo-popup");
@@ -22,9 +23,23 @@ const addTodoPopup = new PopupWithForm({
   handleSubmit: (item) => {
     renderTodo(item, "append");
     newTodoValidator.resetValidation();
+    todoCounter.updateTotal(true);
     addTodoPopup.close();
   },
 });
+
+const todoCounter = new TodoCounter(initialTodos, ".counter__text");
+
+function handleCheck(completed) {
+  todoCounter.updateCompleted(completed);
+}
+
+function handleDelete(completed) {
+  if (completed) {
+    todoCounter.updateCompleted(false);
+  }
+  todoCounter.updateTotal(false);
+}
 
 addTodoPopup.setEventListeners();
 /*
@@ -38,7 +53,13 @@ const closeModal = (modal) => {
 */
 // The logic in this function should all be handled in the Todo class.
 const generateTodo = (data) => {
-  const todo = new Todo(data, "#todo-template", todoConfig);
+  const todo = new Todo(
+    data,
+    "#todo-template",
+    todoConfig,
+    handleCheck,
+    handleDelete
+  );
   const todoElement = todo.getView();
 
   return todoElement;
