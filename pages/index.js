@@ -21,7 +21,6 @@ const addTodoForm = document.forms["add-todo-form"];
 const addTodoPopup = new PopupWithForm({
   popupSelector: "#add-todo-popup",
   handleSubmit: (item) => {
-    debugger;
     renderTodo(
       {
         ...item,
