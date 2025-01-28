@@ -21,7 +21,15 @@ const addTodoForm = document.forms["add-todo-form"];
 const addTodoPopup = new PopupWithForm({
   popupSelector: "#add-todo-popup",
   handleSubmit: (item) => {
-    renderTodo(item, "append");
+    debugger;
+    renderTodo(
+      {
+        ...item,
+        id: uuidv4(),
+        completed: false,
+      },
+      "append"
+    );
     newTodoValidator.resetValidation();
     todoCounter.updateTotal(true);
     addTodoPopup.close();
